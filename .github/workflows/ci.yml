@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest      
+    steps:       
+      - name: Checkout repository         
+        uses: actions/checkout@v4
+
+      - name: test case         
+        run:            
+          echo "Test case is running..."
+
+  build:
+    runs-on: ubuntu-latest      
+    steps:       
+      - name: Checkout repository         
+        uses: actions/checkout@v4
+
+      - name: notify build         
+        run:            
+          echo "Build is running..."
+    
+      - name: Build, tag and push Docker image to Dockerhub
+        env:
+            DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+            DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          echo "Building Docker image..."
+          docker build -t goldenowl-testapp ./src
+          docker tag goldenowl-testapp goldenowl-testapp:latest
+          echo DOCKER_PASSWORD | docker login -u DOCKER_USERNAME --password-stdin
+          docker push goldenowl-testapp
