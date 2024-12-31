@@ -1,7 +1,15 @@
 name: CD 
 
 on:
-  workflow_dispatch:
+  workflow_call:
+    inputs:
+      branch:
+        required: true
+        type: string
 
 jobs:
-   # currently do nothing
+  init:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository         
+        uses: actions/checkout@v4
