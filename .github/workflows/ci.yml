@@ -29,13 +29,10 @@ jobs:
           echo "Build is running..."
     
       - name: Build, tag and push Docker image to Dockerhub
-        env:
-            DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-            DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           echo DOCKER_USERNAME
           echo "Building Docker image..."
           docker build -t goldenowl-testapp ./src
           docker tag goldenowl-testapp goldenowl-testapp:latest
-          echo DOCKER_PASSWORD | docker login -u DOCKER_USERNAME --password-stdin
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
           docker push goldenowl-testapp
