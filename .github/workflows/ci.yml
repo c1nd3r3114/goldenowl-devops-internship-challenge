@@ -35,7 +35,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       
       - name: Build Docker Image
-        run: docker build -t goldenowl-testapp .
+        run: docker build -t goldenowl-testapp ./src
       
       - name: Push Docker Image
         run: docker push goldenowl-testapp
