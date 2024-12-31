@@ -31,6 +31,7 @@ jobs:
             DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
             DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
+          echo DOCKER_USERNAME
           echo "Building Docker image..."
           docker build -t goldenowl-testapp ./src
           docker tag goldenowl-testapp goldenowl-testapp:latest
