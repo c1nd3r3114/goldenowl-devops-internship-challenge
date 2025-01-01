@@ -35,7 +35,7 @@ jobs:
         with:
           task-definition: goldenowl-testapp-task-defination.json
           container-name: goldenowl-testapp
-          image: 248189929339.dkr.ecr.us-east-1.amazonaws.com/goldenowl-testapp
+          image: ${{env.ECR_REGISTRY}}/${{env.IMAGE_NAME}}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v2
