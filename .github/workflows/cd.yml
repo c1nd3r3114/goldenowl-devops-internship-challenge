@@ -30,6 +30,10 @@ jobs:
         run: |
           TAG=$(cat version.txt)
           echo "tag=$TAG" >> $GITHUB_ENV
+        
+      - name: debug tag variable
+        run: |
+          echo ${{ env.TAG }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -46,7 +50,6 @@ jobs:
       - name: Deploy Docker image to EC2
         run: |
           ssh -o StrictHostKeyChecking=no -i "ec2_key.pem" ${{ env.EC2_USER }}@${{ env.EC2_HOST }} << EOF
-            aws
             aws ecr get-login-password --region ${{ vars.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
             sudo docker pull ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
             sudo docker run -d --name ${{ env.IMAGE_NAME }} -p 3000:3000 ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
