@@ -54,8 +54,8 @@ jobs:
       - name: Deploy Docker image to EC2
         run: |
           ssh -o StrictHostKeyChecking=no -i "ec2_key.pem" ${{ env.EC2_USER }}@${{ env.EC2_HOST }} << EOF
-            docker stop ${{ env.IMAGE_NAME }} || true
-            docker rm ${{ env.IMAGE_NAME }} || true
-            docker pull ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
-            docker run -d --name ${{ env.IMAGE_NAME }} -p 3000:3000 ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
+            sudo docker stop ${{ env.IMAGE_NAME }} || true
+            sudo docker rm ${{ env.IMAGE_NAME }} || true
+            sudo docker pull ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
+            sudo docker run -d --name ${{ env.IMAGE_NAME }} -p 3000:3000 ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
           EOF
