@@ -14,7 +14,7 @@ jobs:
       - name: Checkout repository         
         uses: actions/checkout@v4
 
-        - name: Fetch the latest Docker image version
+      - name: Fetch the latest Docker image version
         id: fetch-image
         run: |
           export VERSION=$(git rev-parse --short HEAD) 
