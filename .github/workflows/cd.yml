@@ -21,7 +21,7 @@ jobs:
           export IMAGE_NAME=goldenowl-testapp
           export ECR_REGISTRY=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
           export IMAGE=$ECR_REGISTRY/$IMAGE_NAME:$VERSION
-          echo "IMAGE=$IMAGE" >> $GITHUB_ENV
+          echo "image=$IMAGE" >> $GITHUB_ENV
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
@@ -29,7 +29,7 @@ jobs:
         with:
           task-definition: goldenowl-testapp-task-defination.json
           container-name: goldenowl-testapp
-          image: ${{ env.IMAGE }}     
+          image: ${{ steps.fetch-image.outputs.IMAGE }}     
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
