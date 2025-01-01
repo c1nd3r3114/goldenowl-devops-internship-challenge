@@ -43,5 +43,5 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i "ec2_key.pem" ${{ env.EC2_USER }}@${{ env.EC2_HOST }} << EOF
             aws ecr get-login-password --region ${{ vars.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
             sudo docker pull ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}:1.0.0.12572319270
-            sudo docker run -d --name ${{ env.IMAGE_NAME }} -p 3000:3000 ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
+            sudo docker run -d --name ${{ env.IMAGE_NAME }} -p 3000:3000 ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}:1.0.0.12572319270
           EOF
