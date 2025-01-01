@@ -28,7 +28,8 @@ jobs:
       - name: Read version from version.txt
         id: version
         run: |
-          TAG=$(cat version/version.txt)
+          TAG=$(cat version.txt)
+          echo $TAG
           echo "tag=$TAG" >> $GITHUB_ENV
         
 
