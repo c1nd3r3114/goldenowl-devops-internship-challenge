@@ -53,3 +53,4 @@ jobs:
           docker build -t $ECR_REGISTRY/$IMAGE_NAME:$VERSION ./src
           docker push $ECR_REGISTRY/$IMAGE_NAME:$VERSION
           echo "image=$ECR_REGISTRY/$IMAGE_NAME:$VERSION" >>$GITHUB_OUTPUT
+
