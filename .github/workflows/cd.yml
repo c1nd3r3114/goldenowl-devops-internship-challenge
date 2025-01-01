@@ -38,7 +38,7 @@ jobs:
   
       - name: Pull Docker image
         run: |
-          docker pull ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
+          docker pull ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}::${{ steps.version.outputs.tag }}
   
       - name: Deploy Docker image to EC2
         run: |
@@ -46,5 +46,5 @@ jobs:
             docker stop ${{ env.IMAGE_NAME }} || true
             docker rm ${{ env.IMAGE_NAME }} || true
             docker pull ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
-            docker run -d --name ${{ env.IMAGE_NAME }} -p 80:80 ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
+            docker run -d --name ${{ env.IMAGE_NAME }} -p 3000:3000 ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
           EOF
