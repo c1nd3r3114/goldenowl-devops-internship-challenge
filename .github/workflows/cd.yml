@@ -33,7 +33,7 @@ jobs:
         
       - name: debug tag variable
         run: |
-          echo ${{ env.TAG }}
+          echo $TAG
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
