@@ -12,7 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: goldenowl-testapp
-      ECR_REGISTRY: 248189929339.dkr.ecr.us-east-1.amazonaws.com
+      ECR_REGISTRY: ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION}}.amazonaws.com
+      EC2_HOST: ${{ secrets.EC2_HOST }}
+      EC2_USER: ${{ secrets.EC2_USER }}
+      EC2_KEY: ${{ secrets.EC2_KEY }}
     steps:
       - name: Checkout repository         
         uses: actions/checkout@v4
@@ -29,18 +32,19 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: goldenowl-testapp-task-defination.json
-          container-name: goldenowl-testapp
-          image: ${{env.ECR_REGISTRY}}/${{env.IMAGE_NAME}}
-
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
-        with:
-          task-definition: ${{ steps.task-def.outputs.task-definition}}
-          service: 
-          cluster: dev-cluster
-          wait-for-service-stability: true  
+      - name: Authenticate Docker with ECR
+        run: |
+          aws ecr get-login-password --region ${{ vars.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
+  
+      - name: Pull Docker image
+        run: |
+          docker pull ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
+  
+      - name: Deploy Docker image to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no -i "${{ env.EC2_KEY }}" ${{ env.EC2_USER }}@${{ env.EC2_HOST }} << EOF
+            docker stop ${{ env.IMAGE_NAME }} || true
+            docker rm ${{ env.IMAGE_NAME }} || true
+            docker pull ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
+            docker run -d --name ${{ env.IMAGE_NAME }} -p 80:80 ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
+          EOF
