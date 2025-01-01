@@ -28,7 +28,7 @@ To be honest, I am having some trouble with the ECS deployment and cannot submit
 
 ## Additional
 
-ALB DNS name: goldenowl-testapp-alb-2108755244.us-east-1.elb.amazonaws.com
+ALB DNS name: goldenowl-testapp-alb-1856532215.us-east-1.elb.amazonaws.com
 
 Architecture:
 
