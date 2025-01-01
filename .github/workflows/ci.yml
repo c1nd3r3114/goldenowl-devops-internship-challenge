@@ -14,10 +14,6 @@ jobs:
       - name: Checkout repository         
         uses: actions/checkout@v4
 
-      - name: test case         
-        run:            
-          echo "Test case is running..."
-
   build:
     runs-on: ubuntu-latest      
     env:
@@ -25,10 +21,6 @@ jobs:
     steps:       
       - name: Checkout repository         
         uses: actions/checkout@v4
-
-      - name: notify build         
-        run:            
-          echo "Build is running..."
     
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
