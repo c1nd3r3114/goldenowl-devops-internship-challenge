@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: goldenowl-testapp
-      ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+      ECR_REGISTRY: 248189929339.dkr.ecr.us-east-1.amazonaws.com
     steps:
       - name: Checkout repository         
         uses: actions/checkout@v4
@@ -35,7 +35,7 @@ jobs:
         with:
           task-definition: goldenowl-testapp-task-defination.json
           container-name: goldenowl-testapp
-          image: 248189929339.dkr.ecr.us-east-1.amazonaws.com/goldenowl-testapp
+          image: $ECR_REGISTRY/$IMAGE_NAME:latest
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v2
