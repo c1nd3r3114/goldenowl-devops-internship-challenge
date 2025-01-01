@@ -31,7 +31,7 @@ jobs:
           image: $ECR_REGISTRY/$IMAGE_NAME:$VERSION    
 
       - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition}}
           service: goldenowl-testapp
