@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest      
     env:
       IMAGE_NAME: goldenowl-testapp
-      ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+      ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com
     steps:       
       - name: Checkout repository         
         uses: actions/checkout@v4
