@@ -40,7 +40,7 @@ jobs:
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v2
         with:
-          task-definition: goldenowl-testapp-task-defination.json
+          task-definition: ${{ steps.task-def.outputs.task-definition}}
           service: goldenowl-testapp
           cluster: dev-cluster
           wait-for-service-stability: true  
