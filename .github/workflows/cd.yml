@@ -22,12 +22,6 @@ jobs:
         with:
           name: version
 
-      - name: Checking variables
-        run: |
-          export VERSION=$(cat version.txt)
-          echo $VERSION
-          echo $ECR_REGISTRY/$IMAGE_NAME:$VERSION
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -41,7 +35,7 @@ jobs:
         with:
           task-definition: goldenowl-testapp-task-defination.json
           container-name: goldenowl-testapp
-          image: ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}   
+          image: $ECR_REGISTRY/$IMAGE_NAME:$VERSION   
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v2
