@@ -24,6 +24,12 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: version
+          
+      - name: Read version from version.txt
+        id: version
+        run: |
+          TAG=$(cat version.txt)
+          echo "tag=$TAG" >> $GITHUB_ENV
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -38,7 +44,7 @@ jobs:
   
       - name: Pull Docker image
         run: |
-          docker pull ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}::${{ steps.version.outputs.tag }}
+          docker pull ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.tag }}
   
       - name: Deploy Docker image to EC2
         run: |
