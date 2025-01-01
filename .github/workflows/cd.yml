@@ -38,10 +38,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      - name: Authenticate Docker with ECR
-        run: |
-          aws ecr get-login-password --region ${{ vars.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
-
       - name: Save SSH Key
         run: |
           echo "${{ secrets.EC2_KEY }}" > ec2_key.pem
@@ -50,6 +46,7 @@ jobs:
       - name: Deploy Docker image to EC2
         run: |
           ssh -o StrictHostKeyChecking=no -i "ec2_key.pem" ${{ env.EC2_USER }}@${{ env.EC2_HOST }} << EOF
+            aws ecr get-login-password --region ${{ vars.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
             sudo docker pull ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
             sudo docker run -d --name ${{ env.IMAGE_NAME }} -p 3000:3000 ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}
           EOF
