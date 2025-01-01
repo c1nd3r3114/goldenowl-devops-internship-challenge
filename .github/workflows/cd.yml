@@ -28,12 +28,9 @@ jobs:
       - name: Read version from version.txt
         id: version
         run: |
-          TAG=$(cat version.txt)
+          TAG=$(cat version/version.txt)
           echo "tag=$TAG" >> $GITHUB_ENV
         
-      - name: debug tag variable
-        run: |
-          echo $TAG
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
