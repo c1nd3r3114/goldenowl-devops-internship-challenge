@@ -22,6 +22,11 @@ jobs:
         with:
           name: version
 
+      - name: Checking variables
+        run: |
+          export VERSION=$(cat version.txt)
+          echo $VERSION
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
