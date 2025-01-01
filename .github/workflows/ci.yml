@@ -31,7 +31,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
       
       - name: Login to AWS ECR
-        uses: aws-actions/amazon-ecr-login@v2
+        uses: aws-actions/amazon-ecr-login@v3
     
       - name: Create version.txt
         run: |
@@ -41,7 +41,7 @@ jobs:
           echo $VERSION
       
       - name: Upload version.txt as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: version
           path: version.txt
