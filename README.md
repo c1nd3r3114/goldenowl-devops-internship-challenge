@@ -14,7 +14,13 @@ Your mission, should you choose to accept it, is to craft a CI job that:
 We would be genuinely delighted if you could complement your submission with a `visual flow diagram`, illustrating the sequence of tasks you performed, including the implementation of a `load balancer` and `auto scaling` for the deployed application. This additional touch would greatly enhance our understanding and appreciation of your work.
 
 ## Solution
-1. Workflow:
+Workflow:
+
 ![workflows-image](./img/workflow.png)
 
-2. 
+The workflow begins when developer pushes a commit to a GitHub repository. This triggers the GitHub Action workflow, which:
+- Run unit test by using npm
+- Build the Docker image of the application
+- Push the image to Amazon Elastic Container Registry (ECR)
+- Deploy the updated image to Amazon Elastic Container Service (ECS)
+
