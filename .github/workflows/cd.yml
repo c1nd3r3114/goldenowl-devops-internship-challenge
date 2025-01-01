@@ -10,18 +10,17 @@ on:
 jobs:
   init:
     runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: goldenowl-testapp
+      ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
     steps:
       - name: Checkout repository         
         uses: actions/checkout@v4
 
-      - name: Fetch the latest Docker image version
-        id: fetch-image
-        run: |
-          export VERSION=$(git rev-parse --short HEAD) 
-          export IMAGE_NAME=goldenowl-testapp
-          export ECR_REGISTRY=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
-          export IMAGE=$ECR_REGISTRY/$IMAGE_NAME:$VERSION
-          echo "image=$IMAGE" >> $GITHUB_ENV
+      - name: Download version.txt artifact and read version
+        uses: actions/download-artifact@v3
+        with:
+          name: version
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
@@ -29,7 +28,7 @@ jobs:
         with:
           task-definition: goldenowl-testapp-task-defination.json
           container-name: goldenowl-testapp
-          image: ${{ steps.fetch-image.outputs.IMAGE }}     
+          image: $ECR_REGISTRY/$IMAGE_NAME:$VERSION    
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
@@ -37,4 +36,4 @@ jobs:
           task-definition: ${{ steps.task-def.outputs.task-definition}}
           service: goldenowl-testapp
           cluster: dev-cluster
-          wait-for-service-stability: true 
+          wait-for-service-stability: true  
