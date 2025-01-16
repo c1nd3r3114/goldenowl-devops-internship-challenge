@@ -2,7 +2,7 @@
 
 set -e
 
-cd /src
+cd ./src
 
 IMAGE_NAME=$IMAGE_NAME
 DOCKER_REGISTRY=$DOCKER_REGISTRY
