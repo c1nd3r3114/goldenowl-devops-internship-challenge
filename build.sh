@@ -2,6 +2,8 @@
 
 set -e
 
+cd /src
+
 IMAGE_NAME=$IMAGE_NAME
 DOCKER_REGISTRY=$DOCKER_REGISTRY
 
@@ -14,3 +16,5 @@ push_image() {
   echo "Pushing Docker image..."
   docker push $DOCKER_REGISTRY/$IMAGE_NAME:$CIRCLE_SHA1
 }
+
+build_image $IMAGE_NAME 
