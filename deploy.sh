@@ -12,4 +12,5 @@ deploy_image() {
   sudo docker run -d -p 3000:3000 $DOCKER_REGISTRY/$IMAGE_NAME
 }
 
+pull_image
 deploy_image
