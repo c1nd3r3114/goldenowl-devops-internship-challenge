@@ -2,8 +2,6 @@
 
 set -e
 
-cat $IMAGE_NAME
-
 pull_image() {
   echo "Pulling Docker image..."
   sudo docker pull $DOCKER_REGISTRY/$IMAGE_NAME
