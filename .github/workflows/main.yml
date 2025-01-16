@@ -57,6 +57,9 @@ jobs:
           ssh-known-hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
 
       - name: Run deploy script
+        env: 
+          IMAGE_NAME: goldenowl-testapp
+          DOCKER_REGISTRY: ${{ vars.DOCKER_REGISTRY }}
         run: |
           chmod +x deploy.sh
           ./deploy.sh
