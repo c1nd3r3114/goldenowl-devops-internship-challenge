@@ -17,4 +17,5 @@ push_image() {
   docker push $DOCKER_REGISTRY/$IMAGE_NAME
 }
 
-build_image $IMAGE_NAME 
+build_image 
+push_image 
