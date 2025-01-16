@@ -2,8 +2,7 @@
 
 set -e
 
-IMAGE_NAME=$IMAGE_NAME
-DOCKER_REGISTRY=$DOCKER_REGISTRY
+cat $IMAGE_NAME
 
 pull_image() {
   echo "Pulling Docker image..."
