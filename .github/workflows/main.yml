@@ -43,14 +43,20 @@ jobs:
 
 
 
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   steps:
-  #     - name: Checkout repository         
-  #       uses: actions/checkout@v4
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout repository         
+        uses: actions/checkout@v4
+      
+      - name: SSH into instance
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-known-hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
 
-  #     - name: Run deploy script
-  #       run: |
-  #         chmod +x deploy.sh
-  #         ./deploy.sh
+      - name: Run deploy script
+        run: |
+          chmod +x deploy.sh
+          ./deploy.sh
