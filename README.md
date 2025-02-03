@@ -24,8 +24,6 @@ The workflow begins when developer pushes a commit to a GitHub repository. This 
 - Push the image to Amazon Elastic Container Registry (ECR)
 - Deploy the updated image to Amazon Elastic Container Service (ECS)
 
-To be honest, I am having some trouble with the ECS deployment and cannot submit the product in time. I apologize for my lack of completion with the test. I will submit the rest of the test today.
-
 ## Additional
 
 ALB DNS name: goldenowl-testapp-alb-1856532215.us-east-1.elb.amazonaws.com
